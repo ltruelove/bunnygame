@@ -1,5 +1,5 @@
 function Back(game){
-	var texture = PIXI.Texture.fromImage("back.png");
+	var texture = PIXI.Texture.fromImage("resources/back.png");
 	PIXI.TilingSprite.call(this,texture,400,300);
 	
 	this.game = game;

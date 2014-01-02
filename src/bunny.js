@@ -1,5 +1,5 @@
 function Bunny(game){
-	var texture = PIXI.Texture.fromImage("bunny.png");
+	var texture = PIXI.Texture.fromImage("resources/bunny.png");
 	PIXI.Sprite.call(this,texture);
 	
 	this.anchor.x = 0.5;

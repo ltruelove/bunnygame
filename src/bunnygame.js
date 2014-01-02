@@ -15,7 +15,7 @@ function BunnyGame(){
 	document.body.appendChild(this.renderer.view);
 	
 	// create a texture from an image path
-	var blockTexture = PIXI.Texture.fromImage("block.png");
+	var blockTexture = PIXI.Texture.fromImage("resources/block.png");
 	// create a new Sprite using the texture
 	var block = new PIXI.Sprite(blockTexture);
 	

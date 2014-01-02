@@ -1,5 +1,5 @@
 function Fore(game){
-	var texture = PIXI.Texture.fromImage("fore.png");
+	var texture = PIXI.Texture.fromImage("resources/fore.png");
 	PIXI.TilingSprite.call(this,texture,400,300);
 	
 	this.game = game;

@@ -32,6 +32,7 @@ function BunnyGame(){
     var fixDef = new box2d.b2FixtureDef();
     fixDef.density = 1;
     fixDef.friction = 0.5;
+    fixDef.restitution = .75;
     
     var bodyDef = new box2d.b2BodyDef();
     bodyDef.type = box2d.b2Body.b2_dynamicBody;
@@ -98,8 +99,13 @@ BunnyGame.prototype.keyup = function(evt){
 }
 
 BunnyGame.prototype.update = function(){
+	    requestAnimFrame( this.update.bind(this) );
+        
 	    // just for fun, lets rotate mr rabbit a little
 	    //bunny.rotation += 0.1;
+		
+        this.world.Step(1/60, 10, 10);
+        this.world.ClearForces();
 		
         //this.blockView.block.position.x = this.blockView.body.GetPosition().x * SCALE;
         this.blockView.block.position.y = this.blockView.body.GetPosition().y * SCALE;
@@ -109,8 +115,4 @@ BunnyGame.prototype.update = function(){
 		
 	    // render the stage   
 	    this.renderer.render(this.stage);
-        this.world.Step(1/60, 10, 10);
-        this.world.ClearForces();
-		
-	    requestAnimFrame( this.update.bind(this) );
 }

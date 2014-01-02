@@ -27,7 +27,7 @@ function BunnyGame(){
 	
 	//position the block sprite
 	this.blockView.block.position.x = 150;
-	this.blockView.block.position.y = 67;
+	this.blockView.block.position.y = 0;
     
     var fixDef = new box2d.b2FixtureDef();
     fixDef.density = 1;
@@ -39,7 +39,7 @@ function BunnyGame(){
     bodyDef.position.y = this.blockView.block.position.y / SCALE;
     
     fixDef.shape = new box2d.b2PolygonShape();
-    fixDef.shape.SetAsBox(200 / SCALE, 20 / SCALE);
+    fixDef.shape.SetAsBox(this.blockView.block.width / SCALE, this.blockView.block.height / SCALE);
     
     this.blockView.body = this.world.CreateBody(bodyDef);
     this.blockView.body.CreateFixture(fixDef);
@@ -72,7 +72,7 @@ BunnyGame.prototype.setupPhysics = function(){
     bodyDef.position.y = 300 / SCALE;
     
     fixDef.shape = new box2d.b2PolygonShape();
-    fixDef.shape.SetAsBox(200 / SCALE, 20 / SCALE);
+    fixDef.shape.SetAsBox(200 / SCALE, 40 / SCALE);
     
     this.world.CreateBody(bodyDef).CreateFixture(fixDef);
 }
@@ -101,7 +101,7 @@ BunnyGame.prototype.update = function(){
 	    // just for fun, lets rotate mr rabbit a little
 	    //bunny.rotation += 0.1;
 		
-        this.blockView.block.position.x = this.blockView.body.GetPosition().x * SCALE;
+        //this.blockView.block.position.x = this.blockView.body.GetPosition().x * SCALE;
         this.blockView.block.position.y = this.blockView.body.GetPosition().y * SCALE;
 		this.bunny.update();
 		this.back.update();

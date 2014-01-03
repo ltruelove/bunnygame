@@ -14,6 +14,7 @@ function BunnyGame(){
 	this.bunny = new Bunny(this);
 	this.back = new Back();
 	this.fore = new Fore();
+    this.block = new Block(this);
 	
 	// add the renderer view element to the DOM
 	document.body.appendChild(this.renderer.view);
@@ -21,6 +22,7 @@ function BunnyGame(){
 	this.stage.addChild(this.back);
 	this.stage.addChild(this.fore);
 	this.stage.addChild(this.bunny);
+	this.stage.addChild(this.block);
 	
 	document.onkeydown = this.keydown.bind(this);
 	
@@ -84,6 +86,7 @@ BunnyGame.prototype.update = function(){
 		this.bunny.update();
 		this.back.update();
 		this.fore.update();
+        this.block.update();
 		
 	    // render the stage   
 	    this.renderer.render(this.stage);

@@ -18,36 +18,8 @@ function BunnyGame(){
 	// add the renderer view element to the DOM
 	document.body.appendChild(this.renderer.view);
 	
-	// create a texture from an image path
-	var blockTexture = PIXI.Texture.fromImage("resources/block.png");
-    
-    this.blockView = new Object();
-	// create a new Sprite using the texture
-	this.blockView.block = new PIXI.Sprite(blockTexture);
-	
-	//position the block sprite
-	this.blockView.block.position.x = 150;
-	this.blockView.block.position.y = 0;
-    
-    var fixDef = new box2d.b2FixtureDef();
-    fixDef.density = 1;
-    fixDef.friction = 0.5;
-    fixDef.restitution = .75;
-    
-    var bodyDef = new box2d.b2BodyDef();
-    bodyDef.type = box2d.b2Body.b2_dynamicBody;
-    bodyDef.position.x = this.blockView.block.position.x / SCALE;
-    bodyDef.position.y = this.blockView.block.position.y / SCALE;
-    
-    fixDef.shape = new box2d.b2PolygonShape();
-    fixDef.shape.SetAsBox(this.blockView.block.width / SCALE, this.blockView.block.height / SCALE);
-    
-    this.blockView.body = this.world.CreateBody(bodyDef);
-    this.blockView.body.CreateFixture(fixDef);
-    
 	this.stage.addChild(this.back);
 	this.stage.addChild(this.fore);
-	this.stage.addChild(this.blockView.block);
 	this.stage.addChild(this.bunny);
 	
 	document.onkeydown = this.keydown.bind(this);
@@ -76,6 +48,7 @@ BunnyGame.prototype.setupPhysics = function(){
     fixDef.shape.SetAsBox(200 / SCALE, 40 / SCALE);
     
     this.world.CreateBody(bodyDef).CreateFixture(fixDef);
+
 }
 
 BunnyGame.prototype.keydown = function(evt){
@@ -108,7 +81,6 @@ BunnyGame.prototype.update = function(){
         this.world.ClearForces();
 		
         //this.blockView.block.position.x = this.blockView.body.GetPosition().x * SCALE;
-        this.blockView.block.position.y = this.blockView.body.GetPosition().y * SCALE;
 		this.bunny.update();
 		this.back.update();
 		this.fore.update();

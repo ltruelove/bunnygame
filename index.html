@@ -1,25 +1,25 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>pixi.js example 1</title>
-	<style>
-		body {
-			margin: 0;
-			padding: 0;
-			background-color: #000000;
-		}
-	</style>
-	<script src="lib/pixi.js"></script>
-	<script src="lib/box2dweb.js"></script>
-	<script src="src/bunnygame.js"></script>
-	<script src="src/bunny.js"></script>
-	<script src="src/back.js"></script>
-	<script src="src/fore.js"></script>
-	<script src="src/block.js"></script>
+    <title>Bunny Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+        }
+    </style>
+    <script src="lib/pixi.js"></script>
+    <script src="lib/box2dweb.js"></script>
+    <script src="src/bunnygame.js"></script>
+    <script src="src/bunny.js"></script>
+    <script src="src/back.js"></script>
+    <script src="src/fore.js"></script>
+    <script src="src/block.js"></script>
 
 </head>
 <body onload="init();">
-	<script>
+    <script>
         var box2d = {
             b2Vec2 : Box2D.Common.Math.b2Vec2,
             b2BodyDef : Box2D.Dynamics.b2BodyDef,
@@ -33,10 +33,10 @@
             b2DebugDraw : Box2D.Dynamics.b2DebugDraw,
             b2ContactListener : Box2D.Dynamics.b2ContactListener
         };
-		function init(){
-			game = new BunnyGame();
-		}
-	</script>
+        function init(){
+            game = new BunnyGame();
+        }
+    </script>
 
-	</body>
+    </body>
 </html>

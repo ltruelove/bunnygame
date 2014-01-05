@@ -1,12 +1,12 @@
 function Bunny(game){
-	var texture = PIXI.Texture.fromImage("resources/bunny.png");
-	PIXI.Sprite.call(this,texture);
-	
-	this.anchor.x = 0.5;
-	this.anchor.y = 0.5;
-	this.position.x = 200;
-	this.position.y = 0;
-	this.game = game;
+    var texture = PIXI.Texture.fromImage("resources/bunny.png");
+    PIXI.Sprite.call(this,texture);
+    
+    this.anchor.x = 0.5;
+    this.anchor.y = 0.5;
+    this.position.x = 200;
+    this.position.y = 0;
+    this.game = game;
     this.remainingJumpSteps = 0;
     this.bottomContactCount = 0;
     
@@ -56,20 +56,20 @@ Bunny.prototype = Object.create(PIXI.Sprite.prototype);
 Bunny.DELTA_MOVEMENT = 2;
 
 Bunny.prototype.update = function(){
-	
+    
     
     if(game.isKeyDown){
-		for(var i in game.keysPressed){
-			switch (game.keysPressed[i]){
-				case 38:
+        for(var i in game.keysPressed){
+            switch (game.keysPressed[i]){
+                case 38:
                     if(this.bottomContactCount > 0 && this.remainingJumpSteps < 1){ 
                         var vec = new box2d.b2Vec2(0,this.body.GetMass() * 200);
                         this.body.ApplyImpulse(vec, this.body.GetWorldCenter());
                         this.remainingJumpSteps = 15;
                     }
-				break;
-			}
-		}
+                break;
+            }
+        }
     }
     
     if(this.remainingJumpSteps > 0){

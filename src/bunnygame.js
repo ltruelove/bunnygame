@@ -7,7 +7,7 @@ function BunnyGame(){
     this.setupPhysics();
     
     // create a renderer instance
-    this.renderer = new PIXI.CanvasRenderer(400, 300);
+    this.renderer = new PIXI.CanvasRenderer(400, 300,document.getElementById('canvas'));
     
     this.isKeyDown = false;
     this.keysPressed = new Array();
@@ -27,6 +27,7 @@ function BunnyGame(){
     document.onkeydown = this.keydown.bind(this);
     
     document.onkeyup = this.keyup.bind(this);
+
     
     requestAnimFrame( this.update.bind(this) );
 }
@@ -51,6 +52,11 @@ BunnyGame.prototype.setupPhysics = function(){
     
     this.world.CreateBody(bodyDef).CreateFixture(fixDef);
 
+    var debugDraw = new box2d.b2DebugDraw();
+    debugDraw.SetSprite(document.getElementById('canvas').getContext("2d"));
+    debugDraw.SetDrawScale(SCALE);
+    debugDraw.SetFlags(box2d.b2DebugDraw.e_shapeBit | box2d.b2DebugDraw.e_jointBit);
+    this.world.SetDebugDraw(debugDraw);
 }
 
 BunnyGame.prototype.keydown = function(evt){

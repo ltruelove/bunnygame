@@ -18,7 +18,7 @@ function Block(game){
     bodyDef.position.y = this.position.y / SCALE;
     
     fixDef.shape = new box2d.b2PolygonShape();
-    fixDef.shape.SetAsBox(this.width / SCALE, this.height / SCALE);
+    fixDef.shape.SetAsBox(8 / SCALE, 8 / SCALE);
     
     this.body = game.world.CreateBody(bodyDef);
     var blockFix = this.body.CreateFixture(fixDef);

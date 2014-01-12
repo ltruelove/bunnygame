@@ -11,17 +11,9 @@ function Bunny(game){
     this.bottomContactCount = 0;
     
     //add in code for physics lib
-    var fixDef = new box2d.b2FixtureDef();
     var polygonShape = new box2d.b2PolygonShape();
-
-    polygonShape.SetAsBox((this.width / 2) / SCALE,(this.height / 2) / SCALE);
-    fixDef.shape = polygonShape;
-    fixDef.density = 1;
-    fixDef.friction = 0.5;
-    fixDef.restitution = .1;
-
     var sensorFixDef = new box2d.b2FixtureDef();
-    polygonShape.SetAsBox(0.3, 0.3, new box2d.b2Vec2(0, -2), 0);
+    polygonShape.SetAsBox(10 / SCALE, 18.5 / SCALE, new box2d.b2Vec2(0, 0), 0);
 
     sensorFixDef.shape = polygonShape;
     sensorFixDef.density = 1;
@@ -32,8 +24,14 @@ function Bunny(game){
     bodyDef.type = box2d.b2Body.b2_dynamicBody;
     bodyDef.position.x = this.position.x / SCALE;
     bodyDef.position.y = this.position.y / SCALE;
+    bodyDef.fixedRotation = true;
+    bodyDef.width;
+    var fixDef = new box2d.b2FixtureDef();
     fixDef.shape = new box2d.b2PolygonShape();
-    fixDef.shape.SetAsBox(this.width / SCALE, this.height / SCALE);
+    fixDef.shape.SetAsBox(13 / SCALE, 18.5 / SCALE);
+    fixDef.density = 1;
+    fixDef.friction = 0.5;
+    fixDef.restitution = .1;
     
     //add the body property to this object for tracking position with the b2 lib
     this.body = game.world.CreateBody(bodyDef);

@@ -3,11 +3,12 @@ var SCALE = 30;
 function BunnyGame(){
     // create an new instance of a pixi stage
     this.stage = new PIXI.Stage(0x66FF99);
+    // create a renderer instance
+    this.renderer = new PIXI.CanvasRenderer(400, 300,document.getElementById('canvas'),true);
+
     this.world = new Object();
     this.setupPhysics();
     
-    // create a renderer instance
-    this.renderer = new PIXI.CanvasRenderer(400, 300,document.getElementById('canvas'));
     
     this.isKeyDown = false;
     this.keysPressed = new Array();
@@ -56,6 +57,7 @@ BunnyGame.prototype.setupPhysics = function(){
     debugDraw.SetSprite(document.getElementById('canvas').getContext("2d"));
     debugDraw.SetDrawScale(SCALE);
     debugDraw.SetFlags(box2d.b2DebugDraw.e_shapeBit | box2d.b2DebugDraw.e_jointBit);
+    debugDraw.m_fillAlpha = 0.5;
     this.world.SetDebugDraw(debugDraw);
 }
 
@@ -95,5 +97,6 @@ BunnyGame.prototype.update = function(){
         this.block.update();
         
         // render the stage   
+        this.world.DrawDebugData();
         this.renderer.render(this.stage);
 }

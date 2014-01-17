@@ -2,43 +2,10 @@
 <html>
 <head>
     <title>Bunny Game</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #000000;
-        }
-    </style>
-    <script src="lib/pixi.js"></script>
-    <script src="lib/box2dweb.js"></script>
-    <script src="src/bunnygame.js"></script>
-    <script src="src/bunny.js"></script>
-    <script src="src/back.js"></script>
-    <script src="src/fore.js"></script>
-    <script src="src/block.js"></script>
+    <script src="lib/phaser.js"></script>
+    <script src="src/game.js"></script>
 
 </head>
-<body onload="init();">
-    <script>
-        var box2d = {
-            b2Vec2 : Box2D.Common.Math.b2Vec2,
-            b2BodyDef : Box2D.Dynamics.b2BodyDef,
-            b2Body : Box2D.Dynamics.b2Body,
-            b2FixtureDef : Box2D.Dynamics.b2FixtureDef,
-            b2Fixture : Box2D.Dynamics.b2Fixture,
-            b2World : Box2D.Dynamics.b2World,
-            b2MassData : Box2D.Collision.Shapes.b2MassData,
-            b2PolygonShape : Box2D.Collision.Shapes.b2PolygonShape,
-            b2CircleShape : Box2D.Collision.Shapes.b2CircleShape,
-            b2DebugDraw : Box2D.Dynamics.b2DebugDraw,
-            b2ContactListener : Box2D.Dynamics.b2ContactListener
-        };
-        function init(){
-            game = new BunnyGame();
-        }
-    </script>
-
-    <canvas id="canvas" width="800" height="300"></canvas>
-
+<body >
     </body>
 </html>

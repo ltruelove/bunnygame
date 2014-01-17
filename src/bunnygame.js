@@ -4,7 +4,8 @@ function BunnyGame(){
     // create an new instance of a pixi stage
     this.stage = new PIXI.Stage(0x66FF99);
     // create a renderer instance
-    this.renderer = new PIXI.CanvasRenderer(400, 300,document.getElementById('canvas'),true);
+    //this.renderer = new PIXI.CanvasRenderer(400, 300,document.getElementById('canvas'),true);
+    this.renderer = new PIXI.autoDetectRenderer(400, 300,document.getElementById('canvas'),true);
 
     this.world = new Object();
     this.setupPhysics();
@@ -97,6 +98,6 @@ BunnyGame.prototype.update = function(){
         this.block.update();
         
         // render the stage   
-        this.world.DrawDebugData();
+        //this.world.DrawDebugData();
         this.renderer.render(this.stage);
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="25" height="19" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="land" tilewidth="32" tileheight="32">
+  <image source="land.png" width="32" height="64"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="25" height="19">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo4AywATEjGiY2ubTEoyaTz/zsaUVaqaZoRQWo+YPHvNpWX7BAAB7mAAp
+  </data>
+ </layer>
+ <objectgroup name="Collision" width="25" height="19">
+  <object x="0" y="576">
+   <polygon points="0,0 96,0 320,-224 480,-224 672,-416 800,-416 800,-384 512,-192 128,32 0,32"/>
+  </object>
+ </objectgroup>
+</map>

@@ -25,12 +25,12 @@ function create(){
     // now we need to create a game layer, and assign it a tile set and a map
     layer = game.add.tilemapLayer(0, 0, 800, 600, tileset, map, 0);
 
-    bunnySprite = game.add.sprite(game.world.centerX, 500, 'bunny');
-    bunnySprite.body.gravity.y = 8;
+    bunnySprite = game.add.sprite(10, 3800, 'bunny');
+    bunnySprite.body.gravity.y = 6;
     // I'm not so sure we need this one.
     bunnySprite.body.collideWorldBounds = true;
 
-    game.world.setBounds(0,0,50*32,30*32); //setting the bounds of the entire level
+    game.world.setBounds(0,0,30*32,120*32); //setting the bounds of the entire level
     game.camera.follow(bunnySprite); //bounds lets us set the camera to follow the character
     cursors = game.input.keyboard.createCursorKeys();
 }
@@ -41,11 +41,11 @@ function update(){
     
     // are we moving left?
     if (cursors.left.isDown){
-        bunnySprite.body.velocity.x = -100;
+        bunnySprite.body.velocity.x = -150;
     }
     // are we moving right?
     if (cursors.right.isDown){
-        bunnySprite.body.velocity.x = 100;
+        bunnySprite.body.velocity.x = 150;
     }
     // are we jumping? 
     if (cursors.up.isDown && bunnySprite.body.touching.down){

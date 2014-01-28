@@ -22,8 +22,11 @@ function create(){
     game.stage.backgroundColor = '#AAA';
     tileset = game.add.tileset("land");
     tileset.setCollisionRange(0, tileset.total-1, true, true, true, true);
+
+    //add a background tile layer
+    bglayer = game.add.tilemapLayer(0, 0, 800, 600, tileset, map, 0);
     // now we need to create a game layer, and assign it a tile set and a map
-    layer = game.add.tilemapLayer(0, 0, 800, 600, tileset, map, 0);
+    layer = game.add.tilemapLayer(0, 0, 800, 600, tileset, map, 1);
 
     bunnySprite = game.add.sprite(10, 3800, 'bunny');
     bunnySprite.body.gravity.y = 6;

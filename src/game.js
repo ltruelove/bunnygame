@@ -19,7 +19,7 @@ function preload(){
 
 function create(){
     map = game.add.tilemap("platforms");
-    game.stage.backgroundColor = '#AAA';
+    game.stage.backgroundColor = '#333';
     tileset = game.add.tileset("land");
     tileset.setCollisionRange(0, tileset.total-1, true, true, true, true);
 
@@ -52,7 +52,7 @@ function update(){
     }
     // are we jumping? 
     if (cursors.up.isDown && bunnySprite.body.touching.down){
-        bunnySprite.body.velocity.y = -300;
+        bunnySprite.body.velocity.y = -275;
     }
 }
 

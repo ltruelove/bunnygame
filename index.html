@@ -3,9 +3,17 @@
 <head>
     <title>Bunny Game</title>
     <script src="lib/phaser.js"></script>
-    <script src="src/game.js"></script>
+    <script src="src/Preloader.js"></script>
+    <script src="src/MainMenu.js"></script>
+    <script src="src/BunGame.js"></script>
 
 </head>
 <body >
+    <script type="text/javascript">
+        var game = new Phaser.Game(800,600, Phaser.Auto);
+        game.state.add('preloader', MainGame.Preloader, true);
+        game.state.add('mainmenu', MainGame.MainMenu);
+        game.state.add('bunnygame', MainGame.BunnyGame);
+    </script>
     </body>
 </html>

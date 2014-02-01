@@ -5,31 +5,45 @@ MainGame.BunnyGame = function(game) {
     this.tileset = null;
     this.layer = null;
     this.cursors = null;
+    this.tileWidth = 70;
+    this.tileHeight = 70;
+    this.music = null;
 }
 
 MainGame.BunnyGame.prototype = {
     preload: function(){
-        this.game.load.tilemap("platforms", "/resources/platforms.json", null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.tileset("land", "/resources/land.png", 32, 32);
+        this.game.load.tilemap("platforms", "/resources/level1.json", null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.tileset("land", "/resources/tiles_spritesheet.png", this.tileWidth, this.tileHeight,144,0,1);
+        //this.game.load.image('L1BG', 'resources/L1BG.png');
+        game.load.audio('music', ['/resources/L1Audio.mp3']);
     },
     
     create: function() {
         this.map = this.game.add.tilemap("platforms");
-        this.game.stage.backgroundColor = '#333';
+        this.game.stage.backgroundColor = '#000';
+        //background = this.game.add.tileSprite(0, 0, 1400, 3500, "L1BG");
         this.tileset = this.game.add.tileset("land");
+        this.tileset.spacing = 1;
         this.tileset.setCollisionRange(0, this.tileset.total-1, true, true, true, true);
     
         //add a background tile layer
-        this.bglayer = this.game.add.tilemapLayer(0, 0, 800, 600, this.tileset, this.map, 0);
+        //this.bglayer = this.game.add.tilemapLayer(0, 0, 800, 600, this.tileset, this.map, 0);
         // now we need to create a game layer, and assign it a tile set and a map
-        this.layer = this.game.add.tilemapLayer(0, 0, 800, 600, this.tileset, this.map, 1);
+        this.layer = this.game.add.tilemapLayer(0, 0, 800, 600, this.tileset, this.map, 0);
     
-        this.bunnySprite = this.game.add.sprite(10, 3800, 'bunny');
-        this.bunnySprite.body.gravity.y = 6;
+        this.music = game.add.audio('music');
+        this.music.play();
+
+        this.bunnySprite = this.game.add.sprite(10, 3400, 'alien');
+        this.bunnySprite.animations.add('walk');
+        // Set Anchor to the center of your sprite
+        this.bunnySprite.anchor.setTo(.5,1);
+
+        this.bunnySprite.body.gravity.y = 15;
         // I'm not so sure we need this one.
         this.bunnySprite.body.collideWorldBounds = true;
     
-        this.game.world.setBounds(0,0,30*32,120*32); //setting the bounds of the entire level
+        this.game.world.setBounds(0,0,20*this.tileWidth,50*this.tileHeight); //setting the bounds of the entire level
         this.game.camera.follow(this.bunnySprite); //bounds lets us set the camera to follow the character
         this.cursors = this.game.input.keyboard.createCursorKeys();
     },
@@ -40,15 +54,25 @@ MainGame.BunnyGame.prototype = {
         
         // are we moving left?
         if (this.cursors.left.isDown){
-            this.bunnySprite.body.velocity.x = -150;
+            this.bunnySprite.body.velocity.x = -200;
+            // Invert scale.x to flip left/right
+            this.bunnySprite.scale.x = -1;
+            this.bunnySprite.animations.play('walk',20,true);
         }
         // are we moving right?
         if (this.cursors.right.isDown){
-            this.bunnySprite.body.velocity.x = 150;
+            this.bunnySprite.body.velocity.x = 200;
+            this.bunnySprite.scale.x = 1;
+            this.bunnySprite.animations.play('walk',20,true);
         }
+
         // are we jumping? 
         if (this.cursors.up.isDown && this.bunnySprite.body.touching.down){
-            this.bunnySprite.body.velocity.y = -275;
+            this.bunnySprite.body.velocity.y = -750;
+            this.bunnySprite.animations.stop('walk');
+        }
+        if(this.bunnySprite.body.velocity.x == 0 || !this.bunnySprite.body.touching.down){
+            this.bunnySprite.animations.stop('walk');
         }
     }
 }

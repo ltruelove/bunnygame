@@ -4,6 +4,10 @@
   <image source="tiles_spritesheet.png" width="852" height="856"/>
  </tileset>
  <layer name="bg" width="20" height="52">
+  <properties>
+   <property name="scrollFactorX" value="1"/>
+   <property name="scrollFactorY" value="1"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUjIJRMApGwSgY3EB1oB0wggALDnFGKB6KYKi6mx6A0rw13PLmcPGPMRSjA1UG8vyIyzxyAT7zCNkDcz+sTDJmwG0eOe6m1Dx0NaSax8iAWt4SMg+bWnQzqAkA0GoHQg==
   </data>

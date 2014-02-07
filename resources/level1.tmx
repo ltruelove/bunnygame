@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="20" height="50" tilewidth="70" tileheight="70">
+<map version="1.0" orientation="orthogonal" width="20" height="52" tilewidth="70" tileheight="70">
  <tileset firstgid="1" name="sheet" tilewidth="70" tileheight="70" spacing="1">
   <image source="tiles_spritesheet.png" width="852" height="856"/>
  </tileset>
- <layer name="Tile Layer 1" width="20" height="50">
+ <layer name="Tile Layer 1" width="20" height="52">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFuAAXEFsSwPiACE1dN/BguPuPFmA0zKgHRkJYjgQ/0hKgl9diNLZPgc72DXZAy/TLRUOzhwpQYMCf1pDlh2KaVBxoBwxioMBAfLyiqx1q6YAYMJzKAwUG7P2NoR5nCgzDyz/ogFB/kVQMAHfGDsA=
+   eJxjYBgFIxWIoPG5gNiSAB5KAN1/o4AwGA0z6oGREJYjwY+0BOjlqxiN7VOgs32DHdAy/XLR0OyhAhQY8Kc1ZPmhmCYVB9oBgxgoMBAfr+hqh1o6IAYMp/JAgQF7/2Cox5kCw/DyDzog1L8jFQMA5rcOwA==
   </data>
  </layer>
 </map>

@@ -7,6 +7,8 @@ MainGame.BunnyGame = function(game) {
     this.cursors = null;
     this.tileWidth = 70;
     this.tileHeight = 70;
+    this.tilesWide = 20;
+    this.tilesHigh = 52;
     this.music = null;
 }
 
@@ -20,7 +22,7 @@ MainGame.BunnyGame.prototype = {
     
     create: function() {
         this.map = this.game.add.tilemap("platforms");
-        this.game.stage.backgroundColor = '#000';
+        this.game.stage.backgroundColor = '#FFF';
         //background = this.game.add.tileSprite(0, 0, 1400, 3500, "L1BG");
         this.tileset = this.game.add.tileset("land");
         this.tileset.spacing = 1;
@@ -31,8 +33,8 @@ MainGame.BunnyGame.prototype = {
         // now we need to create a game layer, and assign it a tile set and a map
         this.layer = this.game.add.tilemapLayer(0, 0, 800, 600, this.tileset, this.map, 0);
     
-        this.music = game.add.audio('music');
-        this.music.play();
+        //this.music = game.add.audio('music');
+        //this.music.play();
 
         this.bunnySprite = this.game.add.sprite(10, 3400, 'alien');
         this.bunnySprite.animations.add('walk');
@@ -43,7 +45,8 @@ MainGame.BunnyGame.prototype = {
         // I'm not so sure we need this one.
         this.bunnySprite.body.collideWorldBounds = true;
     
-        this.game.world.setBounds(0,0,20*this.tileWidth,50*this.tileHeight); //setting the bounds of the entire level
+        this.game.world.setBounds(0,0,this.tilesWide*this.tileWidth,
+        this.tilesHigh*this.tileHeight); //setting the bounds of the entire level
         this.game.camera.follow(this.bunnySprite); //bounds lets us set the camera to follow the character
         this.cursors = this.game.input.keyboard.createCursorKeys();
     },

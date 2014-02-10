@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="14" tilewidth="70" tileheight="70">
+ <tileset firstgid="1" name="gametiles" tilewidth="70" tileheight="70" spacing="1">
+  <image source="tiles_spritesheet.png" width="852" height="856"/>
+ </tileset>
+ <layer name="bg" width="50" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMApGwSgYBdQEjEgYG1AFYhYizVHFYw42O4kxd6QBAIJUAFo=
+  </data>
+ </layer>
+ <layer name="touch layer" width="50" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRgAtwAbElFCsOsFvoAUQI8OkFRHCwByMwRsOUAmL8Sw170M2itj+ItZsadiGbM5D+oMQ+dDMGiz8sKcDE6CfFHgY86vHJgTAAWlYQUA==
+  </data>
+ </layer>
+ <layer name="spikes" width="50" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMApGwSgYBaOAusCWSDXEqENWi009PjkQAACY9AIm
+  </data>
+ </layer>
+</map>

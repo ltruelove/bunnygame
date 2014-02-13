@@ -26,11 +26,11 @@ MainGame.Level2.prototype = {
         this.map = this.game.add.tilemap("platforms");
         this.spikemap = this.game.add.tilemap("spikes");
         this.game.stage.backgroundColor = '#000';
-        this.background = this.game.add.tileSprite(0, 0, 1024, 2048, "L2BG");
+        this.background = this.game.add.tileSprite(0, 0, 3500, 1050, "L2BG");
         this.tileset = this.game.add.tileset("land");
         this.spiketileset = this.game.add.tileset("land");
         this.tileset.setCollisionRange(0, this.tileset.total-1, true, true, true, true);
-        this.spiketileset.setCollisionRange(0, this.tileset.total-1, true, true, true, true);
+        this.spiketileset.setCollisionRange(0, 60, true, true, true, true);
     
         //add a background tile layer
         this.spikeLayer = this.game.add.tilemapLayer(0, 0, 800, 600, this.spiketileset, this.spikemap, 0);
@@ -53,12 +53,13 @@ MainGame.Level2.prototype = {
         this.game.world.setBounds(0,0,this.tilesWide*this.tileWidth,
         this.tilesHigh*this.tileHeight); //setting the bounds of the entire level
         this.game.camera.follow(this.bunnySprite); //bounds lets us set the camera to follow the character
-        this.background.fixedToCamera = true;
+        //this.background.fixedToCamera = true;
         this.cursors = this.game.input.keyboard.createCursorKeys();
     },
     
     update: function(){
-        this.game.physics.collide(this.bunnySprite, this.layer)
+        this.game.physics.collide(this.bunnySprite, this.layer);
+        this.game.physics.collide(this.bunnySprite, this.spikeLayer, this.spikeCollision, null, this);
         this.bunnySprite.body.velocity.x = 0;
         
         // are we moving left?
@@ -67,8 +68,8 @@ MainGame.Level2.prototype = {
             // Invert scale.x to flip left/right
             this.bunnySprite.scale.x = -1;
             this.bunnySprite.animations.play('walk',20,true);
-            if(this.bunnySprite.position.x > 0){
-                this.background.tilePosition.x += 1;
+            if(this.bunnySprite.position.x > 0 && this.game.camera.view.x > 0){
+                this.background.tilePosition.x += .1;
             }
         }
         // are we moving right?
@@ -76,8 +77,8 @@ MainGame.Level2.prototype = {
             this.bunnySprite.body.velocity.x = 200;
             this.bunnySprite.scale.x = 1;
             this.bunnySprite.animations.play('walk',20,true);
-            if(this.bunnySprite.position.x > (this.tileWidth * this.tilesWide)){
-                this.background.tilePosition.x -= 1;
+            if(this.bunnySprite.position.x < (this.tileWidth * this.tilesWide - this.bunnySprite.width)){
+                this.background.tilePosition.x -= .1;
             }
         }
 
@@ -89,6 +90,10 @@ MainGame.Level2.prototype = {
         if(this.bunnySprite.body.velocity.x == 0 || !this.bunnySprite.body.touching.down){
             this.bunnySprite.animations.stop('walk');
         }
+    },
+
+    spikeCollision: function(a, b){
+        this.game.state.start('level2');
     }
 }
 

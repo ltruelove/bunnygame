@@ -14,7 +14,7 @@ MainGame.MainMenu.prototype = {
     
     beginGame: function(){
         //go to the game
-        this.game.state.start('level2');
+        this.game.state.start('level1');
 
         //clear out the onDown callback or else it will keep trying to load the game
         //every time you press a key

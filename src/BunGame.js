@@ -1,3 +1,4 @@
+        var RIGHT = 0, LEFT = 1;
 MainGame.BunnyGame = function(game) {
     this.game = game;
     this.bunnySprite = null;
@@ -12,6 +13,9 @@ MainGame.BunnyGame = function(game) {
     this.tilesHigh = 52;
     this.music = null;
     this.background = null;
+    this.leftButton = null;
+    this.rightButton = null;
+    this.jumpButton = null;
 }
 
 MainGame.BunnyGame.prototype = {
@@ -21,6 +25,7 @@ MainGame.BunnyGame.prototype = {
         this.game.load.image('spikes', 'resources/coinGold.png');
         game.load.audio('music', ['/resources/L1Audio.mp3']);
         this.game.load.image('L1BG', 'resources/level1bg.png');
+        this.game.load.spritesheet("buttons", "/resources/controls.png", this.tileWidth, this.tileHeight);
     },
     
     create: function() {
@@ -86,6 +91,25 @@ MainGame.BunnyGame.prototype = {
                 this.background.tilePosition.x -= .1;
             }
         }
+
+
+/* Divide the current tap x coordinate to half the game.width, floor it and there you go */
+this.game.input.onTap.add(function(e){
+    if (Math.floor(e.x/(this.game.width/2)) === LEFT) {
+        //do left stuff
+            this.bunnySprite.body.velocity.x = -200;
+            // Invert scale.x to flip left/right
+            this.bunnySprite.scale.x = -1;
+            this.bunnySprite.animations.play('walk',20,true);
+    }
+
+    if (Math.floor(e.x/(this.game.width/2)) === RIGHT) {
+        //do right stuff
+            this.bunnySprite.body.velocity.x = 200;
+            this.bunnySprite.scale.x = 1;
+            this.bunnySprite.animations.play('walk',20,true);
+    }
+});
 
         // are we jumping? 
         if (this.cursors.up.isDown && this.bunnySprite.body.touching.down){

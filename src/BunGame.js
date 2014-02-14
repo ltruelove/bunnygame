@@ -11,19 +11,22 @@ MainGame.BunnyGame = function(game) {
     this.tilesWide = 20;
     this.tilesHigh = 52;
     this.music = null;
+    this.background = null;
 }
 
 MainGame.BunnyGame.prototype = {
     preload: function(){
         this.game.load.tilemap("platforms", "/resources/level1.json", null, Phaser.Tilemap.TILED_JSON);
         this.game.load.tileset("land", "/resources/tiles_spritesheet.png", this.tileWidth, this.tileHeight,144,0,1);
-        this.game.load.image('spikes', 'resources/spikes.png');
+        this.game.load.image('spikes', 'resources/coinGold.png');
         game.load.audio('music', ['/resources/L1Audio.mp3']);
+        this.game.load.image('L1BG', 'resources/level1bg.png');
     },
     
     create: function() {
         this.map = this.game.add.tilemap("platforms");
         this.game.stage.backgroundColor = '#000';
+        this.background = this.game.add.tileSprite(0, 0, 1400, 3640, "L1BG");
         //background = this.game.add.tileSprite(0, 0, 1400, 3500, "L1BG");
         this.tileset = this.game.add.tileset("land");
         this.tileset.spacing = 1;
@@ -69,12 +72,19 @@ MainGame.BunnyGame.prototype = {
             // Invert scale.x to flip left/right
             this.bunnySprite.scale.x = -1;
             this.bunnySprite.animations.play('walk',20,true);
+            if(this.bunnySprite.position.x > 0 && this.game.camera.view.x > 0){
+                this.background.tilePosition.x += .1;
+            }
         }
         // are we moving right?
         if (this.cursors.right.isDown){
             this.bunnySprite.body.velocity.x = 200;
             this.bunnySprite.scale.x = 1;
             this.bunnySprite.animations.play('walk',20,true);
+            if(this.bunnySprite.position.x < 
+               (this.tileWidth * this.tilesWide - this.bunnySprite.width)){
+                this.background.tilePosition.x -= .1;
+            }
         }
 
         // are we jumping? 
@@ -88,6 +98,7 @@ MainGame.BunnyGame.prototype = {
     },
 
     goalCollision: function(player, goal){
+        goal.destroy();
         this.game.state.start('level2');
     }
 }

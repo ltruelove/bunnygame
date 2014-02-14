@@ -37,7 +37,7 @@ MainGame.BunnyGame.prototype = {
         //this.music = game.add.audio('music');
         //this.music.play();
 
-        this.bunnySprite = this.game.add.sprite(10, 10, 'alien');
+        this.bunnySprite = this.game.add.sprite(10, 3400, 'alien');
         this.bunnySprite.animations.add('walk');
         // Set Anchor to the center of your sprite
         this.bunnySprite.anchor.setTo(.5,1);

@@ -60,7 +60,7 @@ MainGame.BunnyGame.prototype = {
     
     update: function(){
         this.game.physics.collide(this.bunnySprite, this.layer)
-        this.game.physics.collide(this.bunnySprite, this.goalSprite, this.goalCollisoin, null, this);
+        this.game.physics.collide(this.bunnySprite, this.goalSprite, this.goalCollision, null, this);
         this.bunnySprite.body.velocity.x = 0;
         
         // are we moving left?
@@ -88,7 +88,6 @@ MainGame.BunnyGame.prototype = {
     },
 
     goalCollision: function(player, goal){
-        console.log("test");
         this.game.state.start('level2');
     }
 }

@@ -12,6 +12,7 @@ MainGame.Level2 = function(game) {
     this.tilesHigh = 15;
     this.music = null;
     this.background = null;
+    this.walkFrames = null;
 }
 
 MainGame.Level2.prototype = {
@@ -42,7 +43,10 @@ MainGame.Level2.prototype = {
         //this.music.play();
 
         this.bunnySprite = this.game.add.sprite(10, 700, 'alien');
-        this.bunnySprite.animations.add('walk');
+        this.walkFrames = Phaser.Animation.generateFrameNames('p3_walk', 1, 11, '', 1);
+        this.bunnySprite.animations.add('walk',this.walkFrames,20,true,false);
+        this.bunnySprite.animations.add('jump',["p3_jump"],20,true,false);
+        this.bunnySprite.animations.add('stand',["p3_stand"],20,true,false);
         // Set Anchor to the center of your sprite
         this.bunnySprite.anchor.setTo(.5,1);
 
@@ -82,14 +86,26 @@ MainGame.Level2.prototype = {
             }
         }
 
-        // are we jumping? 
+        //standing still
+        if(this.bunnySprite.body.velocity.x == 0){
+            this.bunnySprite.animations.stop('walk');
+            this.bunnySprite.animations.play('stand',20,true);
+        }
+
+        //did we press the jump key?
         if (this.cursors.up.isDown && this.bunnySprite.body.touching.down){
             this.bunnySprite.body.velocity.y = -750;
             this.bunnySprite.animations.stop('walk');
+            this.bunnySprite.animations.play('jump',20,true);
         }
-        if(this.bunnySprite.body.velocity.x == 0 || !this.bunnySprite.body.touching.down){
+
+        // are we jumping? 
+        if(!this.bunnySprite.body.touching.down){
             this.bunnySprite.animations.stop('walk');
+                this.bunnySprite.animations.play('jump',20,true);
         }
+
+
     },
 
     spikeCollision: function(a, b){

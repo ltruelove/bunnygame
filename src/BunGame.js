@@ -1,4 +1,3 @@
-        var RIGHT = 0, LEFT = 1;
 MainGame.BunnyGame = function(game) {
     this.game = game;
     this.bunnySprite = null;
@@ -16,6 +15,7 @@ MainGame.BunnyGame = function(game) {
     this.leftButton = null;
     this.rightButton = null;
     this.jumpButton = null;
+    this.walkFrames = null;
 }
 
 MainGame.BunnyGame.prototype = {
@@ -25,7 +25,7 @@ MainGame.BunnyGame.prototype = {
         this.game.load.image('spikes', 'resources/coinGold.png');
         game.load.audio('music', ['/resources/L1Audio.mp3']);
         this.game.load.image('L1BG', 'resources/level1bg.png');
-        this.game.load.spritesheet("buttons", "/resources/controls.png", this.tileWidth, this.tileHeight);
+        this.game.load.atlas("enemies", "/resources/enemies_spritesheet.png","/resources/enemies_atlas.xml", null, Phaser.Loader.TEXTURE_ATLAS_XML_STARLING);
     },
     
     create: function() {
@@ -44,9 +44,13 @@ MainGame.BunnyGame.prototype = {
     
         //this.music = game.add.audio('music');
         //this.music.play();
+        this.testSlime = this.game.add.sprite(100, 3400, 'blockerBody',1);
 
         this.bunnySprite = this.game.add.sprite(10, 3400, 'alien');
-        this.bunnySprite.animations.add('walk');
+        this.walkFrames = Phaser.Animation.generateFrameNames('p3_walk', 1, 11, '', 1);
+        this.bunnySprite.animations.add('walk',this.walkFrames,20,true,false);
+        this.bunnySprite.animations.add('jump',["p3_jump"],20,true,false);
+        this.bunnySprite.animations.add('stand',["p3_stand"],20,true,false);
         // Set Anchor to the center of your sprite
         this.bunnySprite.anchor.setTo(.5,1);
 
@@ -92,32 +96,23 @@ MainGame.BunnyGame.prototype = {
             }
         }
 
+        //standing still
+        if(this.bunnySprite.body.velocity.x == 0){
+            this.bunnySprite.animations.stop('walk');
+            this.bunnySprite.animations.play('stand',20,true);
+        }
 
-/* Divide the current tap x coordinate to half the game.width, floor it and there you go */
-this.game.input.onTap.add(function(e){
-    if (Math.floor(e.x/(this.game.width/2)) === LEFT) {
-        //do left stuff
-            this.bunnySprite.body.velocity.x = -200;
-            // Invert scale.x to flip left/right
-            this.bunnySprite.scale.x = -1;
-            this.bunnySprite.animations.play('walk',20,true);
-    }
-
-    if (Math.floor(e.x/(this.game.width/2)) === RIGHT) {
-        //do right stuff
-            this.bunnySprite.body.velocity.x = 200;
-            this.bunnySprite.scale.x = 1;
-            this.bunnySprite.animations.play('walk',20,true);
-    }
-});
-
-        // are we jumping? 
+        //did we press the jump key?
         if (this.cursors.up.isDown && this.bunnySprite.body.touching.down){
             this.bunnySprite.body.velocity.y = -750;
             this.bunnySprite.animations.stop('walk');
+            this.bunnySprite.animations.play('jump',20,true);
         }
-        if(this.bunnySprite.body.velocity.x == 0 || !this.bunnySprite.body.touching.down){
+
+        // are we in the air? 
+        if(!this.bunnySprite.body.touching.down){
             this.bunnySprite.animations.stop('walk');
+            this.bunnySprite.animations.play('jump',20,true);
         }
     },
 

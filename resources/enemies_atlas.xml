@@ -11,8 +11,8 @@
     <SubTexture name="pokerMad" x="255" y="0" width="48" height="146"/>
     <SubTexture name="pokerSad" x="304" y="0" width="48" height="146"/>
     <SubTexture name="slimeDead" x="0" y="112" width="59" height="12"/>
-    <SubTexture name="slimeWalk1" x="52" y="125" width="50" height="28"/>
-    <SubTexture name="slimeWalk2" x="0" y="125" width="51" height="26"/>
+    <SubTexture name="slimeWalk1" x="52" y="125" width="50" height="28" frameX="0" frameY="0" frameWidth="51" frameHeight="28"/>
+    <SubTexture name="slimeWalk2" x="0" y="125" width="51" height="26" frameX="0" frameY="-2" frameWidth="51" frameHeight="28"/>
     <SubTexture name="snailShell" x="103" y="119" width="44" height="30"/>
     <SubTexture name="snailShell_upsidedown" x="148" y="118" width="44" height="30"/>
     <SubTexture name="snailWalk1" x="143" y="34" width="54" height="31"/>

@@ -16,6 +16,7 @@ MainGame.BunnyGame = function(game) {
     this.rightButton = null;
     this.jumpButton = null;
     this.walkFrames = null;
+    this.slimeWalkFrames = null;
 }
 
 MainGame.BunnyGame.prototype = {
@@ -44,7 +45,11 @@ MainGame.BunnyGame.prototype = {
     
         //this.music = game.add.audio('music');
         //this.music.play();
-        this.testSlime = this.game.add.sprite(100, 3400, 'blockerBody',1);
+        this.testSlime = this.game.add.sprite(300, 3100, 'enemies',12);
+        this.testSlime.body.gravity.y = 15;
+        this.testSlime.body.collideWorldBounds = true;
+        this.slimeWalkFrames = Phaser.Animation.generateFrameNames('slime_walk', 1, 2, '', 0);
+        //this.testSlime.animations.add('slimewalk',this.slimeWalkFrames,20,true,false);
 
         this.bunnySprite = this.game.add.sprite(10, 3400, 'alien');
         this.walkFrames = Phaser.Animation.generateFrameNames('p3_walk', 1, 11, '', 1);
@@ -71,9 +76,11 @@ MainGame.BunnyGame.prototype = {
     },
     
     update: function(){
-        this.game.physics.collide(this.bunnySprite, this.layer)
+        this.game.physics.collide(this.bunnySprite, this.layer);
+        this.game.physics.collide(this.testSlime, this.layer);
         this.game.physics.collide(this.bunnySprite, this.goalSprite, this.goalCollision, null, this);
         this.bunnySprite.body.velocity.x = 0;
+        //this.testSlime.animations.play('slimewalk',20,true);
         
         // are we moving left?
         if (this.cursors.left.isDown){

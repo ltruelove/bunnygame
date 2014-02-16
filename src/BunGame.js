@@ -48,8 +48,8 @@ MainGame.BunnyGame.prototype = {
         //this.music.play();
 
         //add a test enemy
-        this.slime = new Slime(this.game);
-        this.slime.create(100, 3400);
+        this.slime = new MainGame.Slime(this.game, 100, 3400);
+        this.slime.animateSlime();
 
         this.bunnySprite = this.game.add.sprite(10, 3400, 'alien');
         this.walkFrames = Phaser.Animation.generateFrameNames('p3_walk', 1, 11, '', 1);
@@ -80,7 +80,7 @@ MainGame.BunnyGame.prototype = {
         this.game.physics.collide(this.bunnySprite, this.layer);
 
         //make the test enemy collide with the world
-        this.game.physics.collide(this.slime.sprite, this.layer);
+        this.game.physics.collide(this.slime, this.layer);
 
         //handle the collision of the player and the goal
         this.game.physics.collide(this.bunnySprite, this.goalSprite, this.goalCollision, null, this);
@@ -88,9 +88,6 @@ MainGame.BunnyGame.prototype = {
         //reset velocities
         this.bunnySprite.body.velocity.x = 0;
 
-        //update the slime
-        this.slime.update();
-        
         // are we moving left?
         if (this.cursors.left.isDown){
             this.bunnySprite.body.velocity.x = -200;

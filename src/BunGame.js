@@ -48,11 +48,12 @@ MainGame.BunnyGame.prototype = {
         //this.music = game.add.audio('music');
         //this.music.play();
 
-        //add a test enemy
+        //add a group of test enemies
         this.slimeGroup = this.game.add.group();
-        for(var i = 0; i < 10; i++){
-            slime = new MainGame.Slime(this.game, 70 * i, 3400 - (i*70));
+        for(var i = 1; i <= 10; i++){
+            slime = new MainGame.Slime(this.game, 140 * i, 3400 - (i*140));
             slime.animateSlime();
+            slime.name = 'slime';
             this.slimeGroup.add(slime);
         }
 
@@ -63,6 +64,7 @@ MainGame.BunnyGame.prototype = {
         this.bunnySprite.animations.add('stand',["p3_stand"],20,true,false);
         // Set Anchor to the center of your sprite
         this.bunnySprite.anchor.setTo(.5,1);
+        this.bunnySprite.name = 'player';
 
         this.bunnySprite.body.gravity.y = 15;
         // I'm not so sure we need this one.
@@ -83,6 +85,18 @@ MainGame.BunnyGame.prototype = {
     slimeUpdate: function(slime){
         this.game.physics.collide(slime,this.layer);
     },
+
+    slimePlayerCollision: function(objA, objB){
+        //player dies and starts level over
+        if((objA.body.touching.left && objB.body.touching.right)
+             || (objA.body.touching.right && objB.body.touching.left)
+             || (objA.body.touching.up && objB.body.touching.down)){
+            this.game.state.start('level1');
+        }else if(objA.body.touching.down && objB.body.touching.up){
+            //kill the enemy
+            objB.kill();
+        }
+    },
     
     update: function(){
         //make the player collide with the world
@@ -91,6 +105,7 @@ MainGame.BunnyGame.prototype = {
         //make the test enemy collide with the world
         //this.game.physics.collide(this.slime, this.layer);
         this.slimeGroup.forEach(this.slimeUpdate, this);
+        this.game.physics.collide(this.bunnySprite, this.slimeGroup, this.slimePlayerCollision, null, this);
         this.slimeGroup.callAll('update',null);
 
         //handle the collision of the player and the goal

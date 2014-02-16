@@ -25,7 +25,7 @@ MainGame.Slime.prototype.constructor = MainGame.Slime;
     MainGame.Slime.prototype.update = function() {
         this.body.velocity.x = 0;
         
-        //if(this.body.touching.down){
+        if(this.body.touching.down){
             if(this.position.x - (this.body.halfWidth + 1) <= this.game.world.bounds.x){
                 this.slimeLeft = false;
             }
@@ -43,7 +43,7 @@ MainGame.Slime.prototype.constructor = MainGame.Slime;
                 this.body.velocity.x = +50;
                 this.scale.x = -1;
             }
-        //}
+        }
         this.animations.play('slimewalk', this.animFrameCount, true);
     };
 

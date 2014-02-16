@@ -18,7 +18,8 @@ MainGame.BunnyGame = function(game) {
     this.walkFrames = null;
     this.playerAnimFrames = 15;
     this.slime = null;
-}
+    this.slimeGroup = null;
+};
 
 MainGame.BunnyGame.prototype = {
     preload: function(){
@@ -48,8 +49,12 @@ MainGame.BunnyGame.prototype = {
         //this.music.play();
 
         //add a test enemy
-        this.slime = new MainGame.Slime(this.game, 100, 3400);
-        this.slime.animateSlime();
+        this.slimeGroup = this.game.add.group();
+        for(var i = 0; i < 10; i++){
+            slime = new MainGame.Slime(this.game, 70 * i, 3400 - (i*70));
+            slime.animateSlime();
+            this.slimeGroup.add(slime);
+        }
 
         this.bunnySprite = this.game.add.sprite(10, 3400, 'alien');
         this.walkFrames = Phaser.Animation.generateFrameNames('p3_walk', 1, 11, '', 1);
@@ -74,13 +79,19 @@ MainGame.BunnyGame.prototype = {
         this.game.camera.follow(this.bunnySprite); //bounds lets us set the camera to follow the character
         this.cursors = this.game.input.keyboard.createCursorKeys();
     },
+
+    slimeUpdate: function(slime){
+        this.game.physics.collide(slime,this.layer);
+    },
     
     update: function(){
         //make the player collide with the world
         this.game.physics.collide(this.bunnySprite, this.layer);
 
         //make the test enemy collide with the world
-        this.game.physics.collide(this.slime, this.layer);
+        //this.game.physics.collide(this.slime, this.layer);
+        this.slimeGroup.forEach(this.slimeUpdate, this);
+        this.slimeGroup.callAll('update',null);
 
         //handle the collision of the player and the goal
         this.game.physics.collide(this.bunnySprite, this.goalSprite, this.goalCollision, null, this);

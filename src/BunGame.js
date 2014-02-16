@@ -62,9 +62,12 @@ MainGame.BunnyGame.prototype = {
         this.bunnySprite.animations.add('walk',this.walkFrames,20,true,false);
         this.bunnySprite.animations.add('jump',["p3_jump"],20,true,false);
         this.bunnySprite.animations.add('stand',["p3_stand"],20,true,false);
+        this.bunnySprite.animations.add('hurt',["p3_hurt"],20,true,false);
         // Set Anchor to the center of your sprite
         this.bunnySprite.anchor.setTo(.5,1);
         this.bunnySprite.name = 'player';
+        this.bunnySprite.isHurt = false;
+        this.bunnySprite.hurtCount = 0;
 
         this.bunnySprite.body.gravity.y = 15;
         // I'm not so sure we need this one.
@@ -86,15 +89,33 @@ MainGame.BunnyGame.prototype = {
         this.game.physics.collide(slime,this.layer);
     },
 
-    slimePlayerCollision: function(objA, objB){
+    slimePlayerCollision: function(bunny, slime){
         //player dies and starts level over
-        if((objA.body.touching.left && objB.body.touching.right)
-             || (objA.body.touching.right && objB.body.touching.left)
-             || (objA.body.touching.up && objB.body.touching.down)){
-            this.game.state.start('level1');
-        }else if(objA.body.touching.down && objB.body.touching.up){
+        if(bunny.body.touching.down && slime.body.touching.up){
             //kill the enemy
-            objB.kill();
+            slime.kill();
+            bunny.body.velocity.y = -150;
+            bunny.animations.stop('walk');
+            bunny.animations.play('jump',this.playerAnimFrames,true);
+        }else{
+            bunny.isHurt = true;
+            bunny.hurtCount = 0;
+            if(bunny.body.touching.left && slime.body.touching.right){
+                bunny.body.velocity.y = -250;
+                bunny.body.velocity.x = 300;
+                bunny.animations.stop('walk');
+                bunny.animations.play('hurt',this.playerAnimFrames,true);
+            }else if(bunny.body.touching.right && slime.body.touching.left){
+                bunny.body.velocity.y = -250;
+                bunny.body.velocity.x = -300;
+                bunny.animations.stop('walk');
+                bunny.animations.play('hurt',this.playerAnimFrames,true);
+            }else if(bunny.body.touching.up && slime.body.touching.down){
+                bunny.body.velocity.y = -250;
+                bunny.body.velocity.x = 300;
+                bunny.animations.stop('walk');
+                bunny.animations.play('hurt',this.playerAnimFrames,true);
+            }
         }
     },
     
@@ -111,47 +132,52 @@ MainGame.BunnyGame.prototype = {
         //handle the collision of the player and the goal
         this.game.physics.collide(this.bunnySprite, this.goalSprite, this.goalCollision, null, this);
 
-        //reset velocities
-        this.bunnySprite.body.velocity.x = 0;
+        if(!this.bunnySprite.isHurt && this.bunnySprite.hurtCount > 30){
+            //reset velocities
+            this.bunnySprite.body.velocity.x = 0;
 
-        // are we moving left?
-        if (this.cursors.left.isDown){
-            this.bunnySprite.body.velocity.x = -200;
-            // Invert scale.x to flip left/right
-            this.bunnySprite.scale.x = -1;
-            this.bunnySprite.animations.play('walk',this.playerAnimFrames,true);
-            if(this.bunnySprite.position.x > 0 && this.game.camera.view.x > 0){
-                this.background.tilePosition.x += .1;
+            // are we moving left?
+            if (this.cursors.left.isDown){
+                this.bunnySprite.body.velocity.x = -200;
+                // Invert scale.x to flip left/right
+                this.bunnySprite.scale.x = -1;
+                this.bunnySprite.animations.play('walk',this.playerAnimFrames,true);
+                if(this.bunnySprite.position.x > 0 && this.game.camera.view.x > 0){
+                    this.background.tilePosition.x += .1;
+                }
             }
-        }
-        // are we moving right?
-        if (this.cursors.right.isDown){
-            this.bunnySprite.body.velocity.x = 200;
-            this.bunnySprite.scale.x = 1;
-            this.bunnySprite.animations.play('walk',this.playerAnimFrames,true);
-            if(this.bunnySprite.position.x < 
-               (this.tileWidth * this.tilesWide - this.bunnySprite.width)){
-                this.background.tilePosition.x -= .1;
+            // are we moving right?
+            if (this.cursors.right.isDown){
+                this.bunnySprite.body.velocity.x = 200;
+                this.bunnySprite.scale.x = 1;
+                this.bunnySprite.animations.play('walk',this.playerAnimFrames,true);
+                if(this.bunnySprite.position.x < 
+                   (this.tileWidth * this.tilesWide - this.bunnySprite.width)){
+                    this.background.tilePosition.x -= .1;
+                }
             }
-        }
 
-        //standing still
-        if(this.bunnySprite.body.velocity.x == 0){
-            this.bunnySprite.animations.stop('walk');
-            this.bunnySprite.animations.play('stand',this.playerAnimFrames,true);
-        }
+            //standing still
+            if(this.bunnySprite.body.velocity.x == 0){
+                this.bunnySprite.animations.stop('walk');
+                this.bunnySprite.animations.play('stand',this.playerAnimFrames,true);
+            }
 
-        //did we press the jump key?
-        if (this.cursors.up.isDown && this.bunnySprite.body.touching.down){
-            this.bunnySprite.body.velocity.y = -750;
-            this.bunnySprite.animations.stop('walk');
-            this.bunnySprite.animations.play('jump',this.playerAnimFrames,true);
-        }
+            //did we press the jump key?
+            if (this.cursors.up.isDown && this.bunnySprite.body.touching.down){
+                this.bunnySprite.body.velocity.y = -750;
+                this.bunnySprite.animations.stop('walk');
+                this.bunnySprite.animations.play('jump',this.playerAnimFrames,true);
+            }
 
-        // are we in the air? 
-        if(!this.bunnySprite.body.touching.down){
-            this.bunnySprite.animations.stop('walk');
-            this.bunnySprite.animations.play('jump',this.playerAnimFrames,true);
+            // are we in the air? 
+            if(!this.bunnySprite.body.touching.down){
+                this.bunnySprite.animations.stop('walk');
+                this.bunnySprite.animations.play('jump',this.playerAnimFrames,true);
+            }
+        }else{
+            this.bunnySprite.hurtCount++;
+            this.bunnySprite.isHurt = false;
         }
     },
 

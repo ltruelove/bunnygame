@@ -45,10 +45,23 @@ MainGame.BunnyGame.prototype = {
         //this.music = game.add.audio('music');
         //this.music.play();
 
+        //create an array of objects containing slime positions
+        var slimeSpots = [{x: 6, y: 47},
+                         {x: 13, y: 44},
+                         {x: 3, y: 39},
+                         {x: 17, y: 32},
+                         {x: 6, y: 32},
+                         {x: 19, y: 28},
+                         {x: 12, y: 24},
+                         {x: 1, y: 23},
+                         {x: 14, y: 5},
+                         {x: 19, y: 5}];
+        
         //add a group of test enemies
         this.slimeGroup = this.game.add.group();
-        for(var i = 1; i <= 10; i++){
-            slime = new MainGame.Slime(this.game, 140 * i, 3400 - (i*140));
+        for(var i = 0; i < 10; i++){
+            var slimePos = slimeSpots[i];
+            slime = new MainGame.Slime(this.game, slimePos.x * this.tileWidth, slimePos.y * this.tileHeight);
             slime.animateSlime();
             slime.name = 'slime';
             this.slimeGroup.add(slime);

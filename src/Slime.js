@@ -4,6 +4,7 @@ MainGame.Slime = function(game, xPos, yPos) {
     this.atlasPosition = 12;
     this.animFrames = null;
     this.slimeLeft = true;
+    this.name = null;
 
     Phaser.Sprite.call(this, game, xPos, yPos, this.atlasName, this.atlasPosition);
     game.add.existing(this);
@@ -20,17 +21,18 @@ MainGame.Slime.prototype.constructor = MainGame.Slime;
         this.animFrames = Phaser.Animation.generateFrameNames('slimeWalk', 1, 2, '', 0);
         this.animations.add('slimewalk',this.animFrames, this.animFrameCount ,true,false);
         this.anchor.setTo(.5,1);
+        
     };
 
     MainGame.Slime.prototype.update = function() {
         this.body.velocity.x = 0;
         
-        if(this.body.touching.down){
-            if(this.position.x - (this.body.halfWidth + 1) <= this.game.world.bounds.x){
+        if(this.body.onFloor()){
+            if(this.position.x - ((this.body.width / 2) + 1) <= this.game.world.bounds.x){
                 this.slimeLeft = false;
             }
 
-            if(this.position.x >= this.game.world.bounds.right - (this.body.halfWidth + 1)){
+            if(this.position.x >= this.game.world.bounds.right - ((this.body.width / 2) + 1)){
                 this.slimeLeft = true;
             }
 

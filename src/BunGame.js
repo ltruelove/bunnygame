@@ -24,27 +24,35 @@ MainGame.BunnyGame = function(game) {
 MainGame.BunnyGame.prototype = {
     preload: function(){
         this.game.load.tilemap("platforms", "/resources/level1.json", null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.tileset("land", "/resources/tiles_spritesheet.png", this.tileWidth, this.tileHeight,144,0,1);
-        this.game.load.image('spikes', 'resources/coinGold.png');
-        game.load.audio('music', ['/resources/L1Audio.mp3']);
-        this.game.load.image('L1BG', 'resources/level1bg.png');
+        this.game.load.image("land", "/resources/tiles_spritesheet.png");
+        this.game.load.image('coin', 'resources/coinGold.png');
+        //this.game.load.audio('music', ['/resources/L1Audio.mp3']);
+        //this.game.load.image('L1BG', 'resources/level1bg.png');
         this.game.load.atlas("enemies", "/resources/enemies_spritesheet.png","/resources/enemies_atlas.xml", null, Phaser.Loader.TEXTURE_ATLAS_XML_STARLING);
     },
     
     create: function() {
         this.map = this.game.add.tilemap("platforms");
         this.game.stage.backgroundColor = '#000';
-        this.background = this.game.add.tileSprite(0, 0, 1400, 3640, "L1BG");
-        this.tileset = this.game.add.tileset("land");
-        this.tileset.spacing = 1;
-        this.tileset.setCollisionRange(0, this.tileset.total-1, true, true, true, true);
+        //this.background = this.game.add.tileSprite(0, 0, 1400, 3640, "L1BG");
+        //this.tileset = this.game.add.tileset("land");
+        //this.tileset.spacing = 1;
+        //this.tileset.setCollisionRange(0, this.tileset.total-1, true, true, true, true);
+        this.map.addTilesetImage('sheet','land');
+        this.map.setCollisionBetween(1,143);
+        
     
         // now we need to create a game layer, and assign it a tile set and a map
-        this.layer = this.game.add.tilemapLayer(0, 0, 800, 600, this.tileset, this.map, 0);
+        //this.layer = this.game.add.tilemapLayer(0, 0, 800, 600, this.tileset, this.map, 0);
+        this.layer = this.map.createLayer('Tile Layer 1');
+        this.layer.resizeWorld();
+        this.layer.debug = true;
     
         //this.music = game.add.audio('music');
         //this.music.play();
 
+        this.game.physics.gravity.y = 1800;
+        
         //create an array of objects containing slime positions
         var slimeSpots = [{x: 6, y: 47},
                          {x: 13, y: 44},
@@ -63,7 +71,7 @@ MainGame.BunnyGame.prototype = {
             var slimePos = slimeSpots[i];
             slime = new MainGame.Slime(this.game, slimePos.x * this.tileWidth, slimePos.y * this.tileHeight);
             slime.animateSlime();
-            slime.name = 'slime';
+            slime.name = 'slime' + (i+1);
             this.slimeGroup.add(slime);
         }
 
@@ -71,10 +79,11 @@ MainGame.BunnyGame.prototype = {
 
         this.bunnySprite = new MainGame.Player(this.game, 10, 3400, this.cursors);
         this.bunnySprite.animatePlayer();
+        this.bunnySprite.body.debug = true;
 
         //add the goal sprite
         this.goalSprite = this.game.add.sprite((this.tilesWide - 1) * this.tileWidth,
-                                               this.tileHeight * 5,'spikes');
+                                               this.tileHeight * 5,'coin');
         this.goalSprite.name = 'goal';
         this.goalSprite.body.immovable = true;
     
@@ -86,6 +95,7 @@ MainGame.BunnyGame.prototype = {
     update: function(){
         //make the player collide with the world
         this.game.physics.collide(this.bunnySprite, this.layer);
+        this.game.physics.collide(this.goalSprite, this.layer);
 
         //make the test enemy collide with the world
         //this.game.physics.collide(this.slime, this.layer);
@@ -99,17 +109,22 @@ MainGame.BunnyGame.prototype = {
         // are we moving left?
         if (this.cursors.left.isDown){
             if(this.bunnySprite.position.x > 0 && this.game.camera.view.x > 0){
-                this.background.tilePosition.x += .1;
+                //this.background.tilePosition.x += .1;
             }
         }
         // are we moving right?
         if (this.cursors.right.isDown){
             if(this.bunnySprite.position.x < (this.tileWidth * this.tilesWide - this.width)){
-                this.background.tilePosition.x -= .1;
+                //this.background.tilePosition.x -= .1;
             }
         }
 
         this.bunnySprite.updatePlayer();
+    },
+    
+    render: function(){
+        //this.game.debug.renderCameraInfo(this.game.camera, 800,600);
+        //this.game.debug.renderPhysicsBody(this.bunnySprite.body);    
     },
 
     goalCollision: function(player, goal){
@@ -122,30 +137,31 @@ MainGame.BunnyGame.prototype = {
     },
 
     slimePlayerCollision: function(bunny, slime){
+        var yVelocity = -1000;
         //player dies and starts level over
         if(bunny.body.touching.down && slime.body.touching.up){
             //kill the enemy
             slime.kill();
-            bunny.body.velocity.y = -150;
+            bunny.body.velocity.y = yVelocity;
             bunny.animations.stop('walk');
-            bunny.animations.play('jump',this.playerAnimFrames,true);
+            bunny.animations.play('jump');
         }else{
             bunny.hurtCount = 30;
             if(bunny.body.touching.left && slime.body.touching.right){
-                bunny.body.velocity.y = -250;
+                bunny.body.velocity.y = yVelocity;
                 bunny.body.velocity.x = 300;
                 bunny.animations.stop('walk');
-                bunny.animations.play('hurt',this.playerAnimFrames,true);
+                bunny.animations.play('hurt');
             }else if(bunny.body.touching.right && slime.body.touching.left){
-                bunny.body.velocity.y = -250;
+                bunny.body.velocity.y = yVelocity;
                 bunny.body.velocity.x = -300;
                 bunny.animations.stop('walk');
-                bunny.animations.play('hurt',this.playerAnimFrames,true);
+                bunny.animations.play('hurt');
             }else if(bunny.body.touching.up && slime.body.touching.down){
-                bunny.body.velocity.y = -250;
+                bunny.body.velocity.y = yVelocity;
                 bunny.body.velocity.x = 300;
                 bunny.animations.stop('walk');
-                bunny.animations.play('hurt',this.playerAnimFrames,true);
+                bunny.animations.play('hurt');
             }
         }
     },

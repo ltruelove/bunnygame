@@ -72,6 +72,7 @@ MainGame.BunnyGame.prototype = {
             slime = new MainGame.Slime(this.game, slimePos.x * this.tileWidth, slimePos.y * this.tileHeight);
             slime.animateSlime();
             slime.name = 'slime' + (i+1);
+            //slime.debug = true;
             this.slimeGroup.add(slime);
         }
 
@@ -79,7 +80,7 @@ MainGame.BunnyGame.prototype = {
 
         this.bunnySprite = new MainGame.Player(this.game, 10, 3400, this.cursors);
         this.bunnySprite.animatePlayer();
-        this.bunnySprite.body.debug = true;
+        //this.bunnySprite.debug = true;
 
         //add the goal sprite
         this.goalSprite = this.game.add.sprite((this.tilesWide - 1) * this.tileWidth,

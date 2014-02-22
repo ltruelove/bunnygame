@@ -126,23 +126,23 @@ MainGame.BunnyGame.prototype = {
         if(bunny.body.touching.down && slime.body.touching.up){
             //kill the enemy
             slime.kill();
-            bunny.body.velocity.y = -150;
+            bunny.body.velocity.y = -350;
             bunny.animations.stop('walk');
             bunny.animations.play('jump',this.playerAnimFrames,true);
         }else{
             bunny.hurtCount = 30;
             if(bunny.body.touching.left && slime.body.touching.right){
-                bunny.body.velocity.y = -250;
+                bunny.body.velocity.y = -450;
                 bunny.body.velocity.x = 300;
                 bunny.animations.stop('walk');
                 bunny.animations.play('hurt',this.playerAnimFrames,true);
             }else if(bunny.body.touching.right && slime.body.touching.left){
-                bunny.body.velocity.y = -250;
+                bunny.body.velocity.y = -450;
                 bunny.body.velocity.x = -300;
                 bunny.animations.stop('walk');
                 bunny.animations.play('hurt',this.playerAnimFrames,true);
             }else if(bunny.body.touching.up && slime.body.touching.down){
-                bunny.body.velocity.y = -250;
+                bunny.body.velocity.y = -450;
                 bunny.body.velocity.x = 300;
                 bunny.animations.stop('walk');
                 bunny.animations.play('hurt',this.playerAnimFrames,true);

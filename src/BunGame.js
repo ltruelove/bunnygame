@@ -27,14 +27,15 @@ MainGame.BunnyGame.prototype = {
         this.game.load.image("land", "/resources/tiles_spritesheet.png");
         this.game.load.image('coin', 'resources/coinGold.png');
         //this.game.load.audio('music', ['/resources/L1Audio.mp3']);
-        //this.game.load.image('L1BG', 'resources/level1bg.png');
+        this.game.load.image('L1BG', 'resources/level1bg.png');
         this.game.load.atlas("enemies", "/resources/enemies_spritesheet.png","/resources/enemies_atlas.xml", null, Phaser.Loader.TEXTURE_ATLAS_XML_STARLING);
     },
     
     create: function() {
         this.map = this.game.add.tilemap("platforms");
         this.game.stage.backgroundColor = '#000';
-        //this.background = this.game.add.tileSprite(0, 0, 1400, 3640, "L1BG");
+        this.background = this.game.add.tileSprite(0, 0, 1400, 3640, "L1BG");
+        //this.background.fixedToCamera = true;
         //this.tileset = this.game.add.tileset("land");
         //this.tileset.spacing = 1;
         //this.tileset.setCollisionRange(0, this.tileset.total-1, true, true, true, true);
@@ -46,7 +47,7 @@ MainGame.BunnyGame.prototype = {
         //this.layer = this.game.add.tilemapLayer(0, 0, 800, 600, this.tileset, this.map, 0);
         this.layer = this.map.createLayer('Tile Layer 1');
         this.layer.resizeWorld();
-        this.layer.debug = true;
+        //this.layer.debug = true;
     
         //this.music = game.add.audio('music');
         //this.music.play();
@@ -144,25 +145,25 @@ MainGame.BunnyGame.prototype = {
             //kill the enemy
             slime.kill();
             bunny.body.velocity.y = yVelocity;
-            bunny.animations.stop('walk');
-            bunny.animations.play('jump');
+            //bunny.animations.stop('walk');
+            //bunny.animations.play('jump');
         }else{
             bunny.hurtCount = 30;
             if(bunny.body.touching.left && slime.body.touching.right){
                 bunny.body.velocity.y = yVelocity;
                 bunny.body.velocity.x = 300;
-                bunny.animations.stop('walk');
-                bunny.animations.play('hurt');
+                //bunny.animations.stop('walk');
+                //bunny.animations.play('hurt');
             }else if(bunny.body.touching.right && slime.body.touching.left){
                 bunny.body.velocity.y = yVelocity;
                 bunny.body.velocity.x = -300;
-                bunny.animations.stop('walk');
-                bunny.animations.play('hurt');
+                //bunny.animations.stop('walk');
+                //bunny.animations.play('hurt');
             }else if(bunny.body.touching.up && slime.body.touching.down){
                 bunny.body.velocity.y = yVelocity;
                 bunny.body.velocity.x = 300;
-                bunny.animations.stop('walk');
-                bunny.animations.play('hurt');
+                //bunny.animations.stop('walk');
+                //bunny.animations.play('hurt');
             }
         }
     },

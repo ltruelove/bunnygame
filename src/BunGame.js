@@ -71,7 +71,7 @@ MainGame.BunnyGame.prototype = {
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
 
-        this.bunnySprite = new MainGame.Player(this.game, 10, 30, this.cursors);
+        this.bunnySprite = new MainGame.Player(this.game, 10, 3400, this.cursors);
         this.bunnySprite.animatePlayer();
 
         //add the goal sprite

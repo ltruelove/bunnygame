@@ -28,6 +28,7 @@ MainGame.BunnyGame.prototype = {
         this.game.load.image('spikes', 'resources/coinGold.png');
         game.load.audio('music', ['/resources/L1Audio.mp3']);
         this.game.load.image('L1BG', 'resources/level1bg.png');
+        this.game.load.image('speech', 'resources/speech_bubble.png');
         this.game.load.atlas("enemies", "/resources/enemies_spritesheet.png","/resources/enemies_atlas.xml", null, Phaser.Loader.TEXTURE_ATLAS_XML_STARLING);
     },
     
@@ -41,6 +42,7 @@ MainGame.BunnyGame.prototype = {
     
         // now we need to create a game layer, and assign it a tile set and a map
         this.layer = this.game.add.tilemapLayer(0, 0, 800, 600, this.tileset, this.map, 0);
+        this.layer = this.game.add.tilemapLayer(0, 0, 800, 600, this.tileset, this.map, 1);
     
         //this.music = game.add.audio('music');
         //this.music.play();
@@ -113,7 +115,26 @@ MainGame.BunnyGame.prototype = {
     },
 
     goalCollision: function(player, goal){
-        goal.destroy();
+        //goal.destroy();
+
+        this.speechBubble = this.game.add.sprite((this.tilesWide - 3) * this.tileWidth,
+                                               this.tileHeight * 2,'speech');
+        this.speechBubble.name = 'speechBubble';
+        this.speechBubble.body.immovable = true;
+
+        var text = game.add.text((this.tilesWide - 3) * this.tileWidth + 5,
+            2 * this.tileHeight + 5,
+            "You have defeated level 1!\n Click to move on to level 2.",
+            {
+                font: "15px Arial",
+                fill: "#000",
+                align: "left"
+            });
+        this.game.input.onDown.addOnce(this.nextLevel, this);
+
+    },
+
+    nextLevel: function(){
         this.game.state.start('level2');
     },
 
@@ -126,23 +147,23 @@ MainGame.BunnyGame.prototype = {
         if(bunny.body.touching.down && slime.body.touching.up){
             //kill the enemy
             slime.kill();
-            bunny.body.velocity.y = -150;
+            bunny.body.velocity.y = -350;
             bunny.animations.stop('walk');
             bunny.animations.play('jump',this.playerAnimFrames,true);
         }else{
             bunny.hurtCount = 30;
             if(bunny.body.touching.left && slime.body.touching.right){
-                bunny.body.velocity.y = -250;
+                bunny.body.velocity.y = -450;
                 bunny.body.velocity.x = 300;
                 bunny.animations.stop('walk');
                 bunny.animations.play('hurt',this.playerAnimFrames,true);
             }else if(bunny.body.touching.right && slime.body.touching.left){
-                bunny.body.velocity.y = -250;
+                bunny.body.velocity.y = -450;
                 bunny.body.velocity.x = -300;
                 bunny.animations.stop('walk');
                 bunny.animations.play('hurt',this.playerAnimFrames,true);
             }else if(bunny.body.touching.up && slime.body.touching.down){
-                bunny.body.velocity.y = -250;
+                bunny.body.velocity.y = -450;
                 bunny.body.velocity.x = 300;
                 bunny.animations.stop('walk');
                 bunny.animations.play('hurt',this.playerAnimFrames,true);

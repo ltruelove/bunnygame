@@ -28,7 +28,7 @@ MainGame.Player.prototype.animatePlayer = function (){
     // Set Anchor to the center of your sprite
     this.anchor.setTo(.5,1);
     this.name = 'player';
-    this.body.gravity.y = 15;
+    this.body.gravity.y = 30;
     this.body.collideWorldBounds = true;
 };
 
@@ -59,7 +59,7 @@ MainGame.Player.prototype.updatePlayer = function() {
 
         //did we press the jump key?
         if (this.cursors.up.isDown && this.body.touching.down){
-            this.body.velocity.y = -750;
+            this.body.velocity.y = -1050;
             this.animations.stop('walk');
             this.animations.play('jump',this.animFrameCount,true);
         }

@@ -34,13 +34,8 @@ MainGame.BunnyGame.prototype = {
     create: function() {
         this.map = this.game.add.tilemap("platforms");
         this.game.stage.backgroundColor = '#000';
-        //this.background = this.game.add.tileSprite(0, 0, 1400, 3640, "L1BG");
-        //this.tileset = this.game.add.tileset("land");
-        //this.tileset.spacing = 1;
-        //this.tileset.setCollisionRange(0, this.tileset.total-1, true, true, true, true);
         this.map.addTilesetImage('sheet','land');
-        this.map.setCollisionBetween(1,143);
-        
+        this.map.setCollisionBetween(0,144);
     
         // now we need to create a game layer, and assign it a tile set and a map
         //this.layer = this.game.add.tilemapLayer(0, 0, 800, 600, this.tileset, this.map, 0);
@@ -80,7 +75,7 @@ MainGame.BunnyGame.prototype = {
 
         this.bunnySprite = new MainGame.Player(this.game, 10, 3400, this.cursors);
         this.bunnySprite.animatePlayer();
-        //this.bunnySprite.debug = true;
+        this.bunnySprite.debug = true;
 
         //add the goal sprite
         this.goalSprite = this.game.add.sprite((this.tilesWide - 1) * this.tileWidth,

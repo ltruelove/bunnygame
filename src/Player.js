@@ -28,7 +28,7 @@ MainGame.Player.prototype.animatePlayer = function (){
     // Set Anchor to the center of your sprite
     this.anchor.setTo(.5,1);
     this.name = 'player';
-    //this.body.linearDamping = 1;
+    this.body.linearDamping = 1;
     this.body.collideWorldBounds = true;
 };
 
@@ -42,28 +42,28 @@ MainGame.Player.prototype.updatePlayer = function() {
             this.body.velocity.x = -1 * this.speed;
             // Invert scale.x to flip left/right
             this.scale.x = -1;
-            //this.animations.play('walk',this.animFrameCount,true);
+            this.animations.play('walk',this.animFrameCount,true);
         }
         // are we moving right?
         if (this.cursors.right.isDown){
             this.body.velocity.x = this.speed;
             this.scale.x = 1;
-            //this.animations.play('walk',this.animFrameCount,true);
+            this.animations.play('walk',this.animFrameCount,true);
         }
 
         //standing still
         if(this.body.velocity.x == 0){
-            //this.animations.stop('walk');
-            //this.animations.play('stand',this.animFrameCount);
+            this.animations.stop('walk');
+            this.animations.play('stand',this.animFrameCount);
         }
 
         if(this.body.onFloor()){
-            //this.animations.stop('jump');
+            this.animations.stop('jump');
             //did we press the jump key?
             if (this.cursors.up.isDown){
                 this.body.velocity.y = -2000;
-                //this.animations.stop('walk');
-                //this.animations.play('jump',this.animFrameCount);
+                this.animations.stop('walk');
+                this.animations.play('jump',this.animFrameCount);
             }
         }else{
             //this.animations.stop('walk');
@@ -75,6 +75,6 @@ MainGame.Player.prototype.updatePlayer = function() {
             this.body.velocity.y += 100;
         }
     }
-    //this.animations.play('walk', this.animFrameCount , true);
+    this.animations.play('walk', this.animFrameCount , true);
 };
 

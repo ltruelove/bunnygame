@@ -19,11 +19,5 @@ MainGame.MainMenu.prototype = {
         //clear out the onDown callback or else it will keep trying to load the game
         //every time you press a key
         this.game.input.keyboard.onDownCallback = null;
-        
-        this.destroy();
-    },
-    
-    destroy: function(){
-        this.game = null;
     }
 }

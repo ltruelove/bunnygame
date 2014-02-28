@@ -58,7 +58,7 @@ MainGame.Player.prototype.updatePlayer = function() {
         }
 
         //did we press the jump key?
-        if (this.cursors.up.isDown && this.body.touching.down){
+        if ((this.cursors.up.isDown || this.game.input.pointer1.isDown) && this.body.touching.down){
             this.body.velocity.y = -1050;
             this.animations.stop('walk');
             this.animations.play('jump',this.animFrameCount,true);

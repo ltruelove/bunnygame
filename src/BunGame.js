@@ -136,6 +136,7 @@ MainGame.BunnyGame.prototype = {
 
     nextLevel: function(){
         this.game.state.start('level2');
+        this.destroy();
     },
 
     slimeUpdate: function(slime){
@@ -170,6 +171,29 @@ MainGame.BunnyGame.prototype = {
             }
         }
     },
+    
+    destroy: function(){
+        this.game = null;
+        this.bunnySprite = null;
+        this.goalSprite = null;
+        this.map = null;
+        this.tileset = null;
+        this.layer = null;
+        this.cursors = null;
+        this.tileWidth = null;
+        this.tileHeight = null;
+        this.tilesWide = null;
+        this.tilesHigh = null;
+        this.music = null;
+        this.background = null;
+        this.leftButton = null;
+        this.rightButton = null;
+        this.jumpButton = null;
+        this.walkFrames = null;
+        this.playerAnimFrames = null;
+        this.slime = null;
+        this.slimeGroup = null;   
+    }
 }
 
 

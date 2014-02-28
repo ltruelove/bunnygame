@@ -74,6 +74,23 @@ MainGame.Level2.prototype = {
 
     spikeCollision: function(a, b){
         this.game.state.start('level2');
+    },
+    
+    destroy: function(){
+        this.game = null;
+        this.bunnySprite = null;
+        this.map = null;
+        this.tileset = null;
+        this.spiketileset = null;
+        this.layer = null;
+        this.cursors = null;
+        this.tileWidth = null;
+        this.tileHeight = null;
+        this.tilesWide = null;
+        this.tilesHigh = null;
+        this.music = null;
+        this.background = null;
+        this.walkFrames = null;
     }
 }
 

@@ -29,7 +29,8 @@ MainGame.BunnyGame.prototype = {
         game.load.audio('music', ['/resources/L1Audio.mp3']);
         this.game.load.image('L1BG', 'resources/level1bg.png');
         this.game.load.image('speech', 'resources/speech_bubble.png');
-        this.game.load.atlas("enemies", "/resources/enemies_spritesheet.png","/resources/enemies_atlas.xml", null, Phaser.Loader.TEXTURE_ATLAS_XML_STARLING);
+        this.game.load.atlas("enemies", "/resources/enemies.png",
+        "/resources/enemies.json", null, Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     },
     
     create: function() {
@@ -146,7 +147,8 @@ MainGame.BunnyGame.prototype = {
         //player dies and starts level over
         if(bunny.body.touching.down && slime.body.touching.up){
             //kill the enemy
-            slime.kill();
+            //this.slimeGroup.remove(slime);
+            slime.squish();
             bunny.body.velocity.y = -350;
             bunny.animations.stop('walk');
             bunny.animations.play('jump',this.playerAnimFrames,true);
